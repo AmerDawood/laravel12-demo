@@ -44,35 +44,37 @@ SmartExam is designed to be a full-fledged test management system with user role
 
 ## Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/your-username/smart-exam-platform.git
    cd smart-exam-platform
 
-2. Install dependencies:
+   composer install
+   npm install && npm run dev
 
-   ```bash
-    composer install
-    npm install && npm run dev
 
-3.  Setup environment variables: 
+   cp .env.example .env
+   php artisan key:generate
 
-   ```bash
-    cp .env.example .env
-    php artisan key:generate
 
-4. Run migrations and seeders: 
 
-   ```bash
    php artisan migrate --seed
+   
 
 
-
-5. Serve the application:
-
-   ```bash
    php artisan serve
+
+
+
+
+
+
+
+
+
+
+
 
 # Development Roadmap
 
