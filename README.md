@@ -171,6 +171,13 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 
 
+## Contact
+
+- 📧 **Email**: [amermadawood@gmail.com](mailto:amermadawood@gmail.com)  
+- 📱 **Phone**: [+972 59 413 3816](tel:+972594133816)  
+- 💼 **LinkedIn**: [linkedin.com/in/amer-dawood](https://www.linkedin.com/in/amer-dawood/)
+
+
    
 
 
