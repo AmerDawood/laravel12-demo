@@ -47,25 +47,31 @@ SmartExam is designed to be a full-fledged test management system with user role
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/smart-exam.git
-   cd smart-exam
+   git clone https://github.com/your-username/smart-exam-platform.git
+   cd smart-exam-platform
 
 2. Install dependencies:
+
+   ```bash
     composer install
     npm install && npm run dev
 
 3.  Setup environment variables: 
+
+   ```bash
     cp .env.example .env
     php artisan key:generate
 
 4. Run migrations and seeders: 
 
+   ```bash
    php artisan migrate --seed
 
 
 
 5. Serve the application:
 
+   ```bash
    php artisan serve
 
 # Development Roadmap
@@ -126,15 +132,15 @@ SmartExam is designed to be a full-fledged test management system with user role
 ## Technologies Used
 
 - **Core Framework**:  
-  Laravel 10 (PHP framework)
+  Laravel 12 (PHP framework)
 
 - **Authentication & Security**:  
-  Laravel Fortify (Auth backend)  
+  Laravel Breez (Auth)  
   Spatie Permissions (Role management)  
   Laravel Sanctum (API authentication)
 
 - **Frontend Stack**:  
-  Jetstream (Scaffolding with Livewire/Inertia options)  
+  Blade and Bootstrap For UI
   Livewire or Inertia.js (Interactive UI components)
 
 - **Third-Party Integrations**:  
