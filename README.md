@@ -60,19 +60,10 @@ SmartExam is designed to be a full-fledged test management system with user role
 
 
    php artisan migrate --seed
-   
+
 
 
    php artisan serve
-
-
-
-
-
-
-
-
-
 
 
 
