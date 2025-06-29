@@ -3,31 +3,30 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserRoleController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // 2FA routes (these will be handled by Fortify)
-    Route::post('/two-factor/enable', function () {
-        auth()->user()->enableTwoFactorAuthentication();
-        return back()->with('status', 'تم تفعيل التحقق بخطوتين بنجاح!');
-    })->name('two-factor.enable');
-
-    Route::delete('/two-factor/disable', function () {
-        auth()->user()->disableTwoFactorAuthentication();
-        return back()->with('status', 'تم تعطيل التحقق بخطوتين.');
-    })->name('two-factor.disable');
 });
+
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/admin/users', [UserRoleController::class, 'index'])->name('admin.users.index');
+    Route::post('/admin/users/{user}/roles', [UserRoleController::class, 'update'])->name('admin.users.update');
+});
+
 
 // Google OAuth routes
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
