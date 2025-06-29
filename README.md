@@ -1,61 +1,179 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SmartExam
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**SmartExam** is an interactive test management platform built with Laravel. It allows instructors to create tests with different question types and students to take these tests online or via API, with real-time notifications and analytics.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Project Overview](#project-overview)  
+- [Features](#features)  
+- [Installation](#installation)  
+- [Development Roadmap](#development-roadmap)  
+- [API Endpoints](#api-endpoints)  
+- [Technologies Used](#technologies-used)  
+- [Contributing](#contributing)  
+- [License](#license)  
+- [Contact](#contact)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Project Overview
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+SmartExam is designed to be a full-fledged test management system with user roles for Admin, Instructor, and Student. It supports real-time notifications, PDF report generation, and API access for mobile apps.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Features
 
-## Laravel Sponsors
+- User authentication (email & Google via Socialite)
+- Role-based access control (Admin, Instructor, Student) via Spatie Permissions
+- Instructor dashboard for creating and managing tests
+- Support for multiple question types: MCQ, written, programming (polymorphic)
+- Student interface for taking tests with timers
+- Attempt and result recording
+- Real-time notifications using Laravel Broadcasting & Pusher
+- PDF report generation for test results
+- Analytics with charts
+- API with Laravel Sanctum for mobile clients
+- Activity logging and session security
+- Multilingual support including Arabic
+- Background jobs, scheduling, and email notifications
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/smart-exam.git
+   cd smart-exam
+
+2. Install dependencies:
+    composer install
+    npm install && npm run dev
+
+3.  Setup environment variables: 
+    cp .env.example .env
+    php artisan key:generate
+
+4. Run migrations and seeders: 
+
+   php artisan migrate --seed
+
+
+
+5. Serve the application:
+
+   php artisan serve
+
+# Development Roadmap
+
+## ✅ Day 1: Setup and Foundation
+- Laravel project setup, GitHub repo  
+- Database and Jetstream + Fortify installation  
+- Socialite Google login  
+- Setup roles with Spatie Permissions  
+
+## ✅ Day 2: Database Design & Models
+- Create core models:  
+  `User`, `Test`, `Question`, `Attempt`, `Answer`, `Result`  
+- Define relationships with Eloquent  
+
+## ✅ Day 3: Dashboard & Test Management
+- Instructor dashboard (Livewire/Vue.js)  
+- CRUD for tests and questions  
+- Soft deletes and restore support  
+
+## ✅ Day 4: Test Taking & Attempt Recording
+- Student test listing  
+- Test start page with timers  
+- Save answers and calculate preliminary results  
+
+## ✅ Day 5: Notifications & Reporting
+- Real-time notifications via Pusher  
+- PDF report generation  
+- Analytics and charts  
+
+## ✅ Day 6: API & Security
+- Laravel Sanctum API for mobile  
+- Rate limiting and activity logging  
+- Multilingual support  
+
+## ✅ Day 7: Finalization & Deployment
+- Jobs, queues, events, and email notifications  
+- Scheduler setup  
+- Deployment instructions and documentation  
+
+
+
+## API Endpoints
+
+| Method | Endpoint                      | Description                              |
+|--------|-------------------------------|------------------------------------------|
+| POST   | `/api/login`                  | User login                               |
+| POST   | `/api/register`               | User registration                        |
+| GET    | `/api/tests`                  | List all available tests                 |
+| POST   | `/api/tests`                  | Create new test (Instructor only)        |
+| POST   | `/api/tests/{id}/questions`   | Add questions to a test                  |
+| POST   | `/api/attempts`               | Start new attempt                        |
+| POST   | `/api/answers`                | Submit answers                           |
+| GET    | `/api/results/{attempt_id}`   | Fetch test attempt result                |
+
+
+
+## Technologies Used
+
+- **Core Framework**:  
+  Laravel 10 (PHP framework)
+
+- **Authentication & Security**:  
+  Laravel Fortify (Auth backend)  
+  Spatie Permissions (Role management)  
+  Laravel Sanctum (API authentication)
+
+- **Frontend Stack**:  
+  Jetstream (Scaffolding with Livewire/Inertia options)  
+  Livewire or Inertia.js (Interactive UI components)
+
+- **Third-Party Integrations**:  
+  Socialite (Google OAuth integration)  
+  Pusher (Real-time broadcasting via Laravel Broadcasting)
+
+- **Reporting & Analytics**:  
+  Barryvdh DomPDF (PDF report generation)  
+  Chart.js (Data visualization)
+
+- **Deployment**:  
+  Included in Laravel ecosystem (Queues, Scheduler, etc.)
+
+
+
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Thank you for your interest in contributing to this project!
 
-## Code of Conduct
+- Feel free to submit issues or pull requests.
+- Please follow the existing code style and conventions.
+- Include tests for any new features or bug fixes.
+- Ensure your pull requests are clean, focused on a single feature or fix, and pass all tests.
+- Provide a clear description and rationale for your changes in your pull request.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+For detailed contribution guidelines, please refer to the official Laravel contribution guide to ensure consistency and quality.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+
+
+
+   
+
+
+    
+
