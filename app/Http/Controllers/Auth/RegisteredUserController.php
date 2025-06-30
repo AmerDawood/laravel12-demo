@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -41,10 +41,25 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        if ($user->wasRecentlyCreated) {
+            $user->assignRole('user'); // أو 'student' حسب ما سميته في roles
+        }
+
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+
+        $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+            return redirect('/admin/dashboard');
+        } elseif ($user->hasRole('instructor')) {
+            return redirect('/instructor/dashboard');
+        } else {
+            return redirect('/user/dashboard');
+        }
+
+        // return redirect(route(name: 'dashboard', absolute: false));
     }
 }

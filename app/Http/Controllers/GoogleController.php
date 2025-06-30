@@ -33,8 +33,23 @@ class GoogleController extends Controller
             ]
         );
 
+
+        if ($user->wasRecentlyCreated) {
+            $user->assignRole('user'); // أو 'student' حسب ما سميته في roles
+        }
+
         Auth::login($user, true);
 
-        return redirect()->intended('/dashboard');
+        // return redirect()->intended('/dashboard');
+
+        $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+            return redirect('/admin/dashboard');
+        } elseif ($user->hasRole('instructor')) {
+            return redirect('/instructor/dashboard');
+        } else {
+            return redirect('/user/dashboard');
+        }
     }
 }

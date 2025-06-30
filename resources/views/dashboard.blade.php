@@ -14,4 +14,16 @@
             </div>
         </div>
     </div>
+
+     <div class="container">
+        <h1>لوحة التحكم - {{ strtoupper($role) }}</h1>
+
+        @if($role === 'admin')
+            <p>مرحباً أيها المدير!</p>
+        @elseif($role === 'instructor')
+            <p>مرحباً أيها المعلم!</p>
+        @elseif($role === 'user')
+            <p>مرحباً أيها الطالب!</p>
+        @endif
+    </div>
 </x-app-layout>

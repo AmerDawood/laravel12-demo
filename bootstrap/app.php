@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
+use App\Http\Middleware\RedirectToRoleDashboard;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
            'role' => RoleMiddleware::class,
         ]);
+        // $middleware->alias([
+        //     'redirect.dashboard' => RedirectToRoleDashboard::class,
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
