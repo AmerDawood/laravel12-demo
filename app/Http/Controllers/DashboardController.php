@@ -11,11 +11,11 @@ class DashboardController extends Controller
         $user = auth()->user();
 
         if (!$user->hasRole($role)) {
-            
+
             abort(403, 'غير مصرح لك بالدخول إلى هذه الصفحة');
 
         }
 
-        return view('dashboard', ['role' => $role]);
+        return view('dashboard.index', ['role' => $role]);
     }
 }

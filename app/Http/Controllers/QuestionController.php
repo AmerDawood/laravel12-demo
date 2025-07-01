@@ -1,65 +1,92 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Test;
 use App\Models\Question;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Test $test)
     {
-        //
+        $questions = $test->questions;
+        return view('questions.index', compact('test', 'questions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Test $test)
     {
-        //
+        return view('questions.create', compact('test'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, Test $test)
     {
-        //
+        $request->validate([
+            'type' => 'required|in:mcq,written,coding,true_false',
+            'question_text' => 'required|string',
+            'options' => 'nullable|array',
+            'correct_answer' => 'nullable|string',
+        ]);
+
+        $question = new Question([
+            'type' => $request->type,
+            'question_text' => $request->question_text,
+            'correct_answer' => $request->correct_answer,
+            'options' => $request->filled('options') ? json_encode($request->options) : null,
+        ]);
+
+        $test->questions()->save($question);
+
+        return redirect()->route('questions.index', $test)->with('msg', '✅ Question added successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Question $question)
-    {
-        //
-    }
+    // Show edit form
+public function edit(Test $test, Question $question)
+{
+    return view('questions.edit', compact('test', 'question'));
+}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Question $question)
-    {
-        //
-    }
+// Update question
+public function update(Request $request, Test $test, Question $question)
+{
+    $request->validate([
+        'type' => 'required|in:mcq,written,coding,true_false',
+        'question_text' => 'required|string',
+        'options' => 'nullable|array',
+        'correct_answer' => 'nullable|string',
+    ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Question $question)
-    {
-        //
-    }
+    $question->update([
+        'type' => $request->type,
+        'question_text' => $request->question_text,
+        'correct_answer' => $request->correct_answer,
+        'options' => $request->filled('options') ? json_encode($request->options) : null,
+    ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Question $question)
-    {
-        //
-    }
+    return redirect()->route('tests.questions.index', $test)->with('msg', '🔄 Question updated successfully');
+}
+
+// Soft delete
+public function destroy(Test $test, Question $question)
+{
+    $question->delete();
+
+    return redirect()->route('tests.questions.index', $test)->with('msg', '🗑️ Question deleted');
+}
+
+// Show trashed
+public function trashed(Test $test)
+{
+    $questions = $test->questions()->onlyTrashed()->get();
+    return view('questions.trashed', compact('test', 'questions'));
+}
+
+// Restore
+public function restore(Test $test, $question_id)
+{
+    $question = $test->questions()->onlyTrashed()->where('id', $question_id)->firstOrFail();
+    $question->restore();
+
+    return redirect()->route('tests.questions.index', $test)->with('msg', '♻️ Question restored successfully');
+}
+
 }

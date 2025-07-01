@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Test extends Model
 {
     /** @use HasFactory<\Database\Factories\TestFactory> */
-    use HasFactory;
+    use HasFactory , SoftDeletes;
 
 
     public function instructor(): BelongsTo

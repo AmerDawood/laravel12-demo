@@ -9,21 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+                   <div class="container">
+        {{-- @livewire('dashboard', ['role' => $role]) --}}
+      </div>
                 </div>
             </div>
         </div>
     </div>
 
-     <div class="container">
-        <h1>لوحة التحكم - {{ strtoupper($role) }}</h1>
 
-        @if($role === 'admin')
-            <p>مرحباً أيها المدير!</p>
-        @elseif($role === 'instructor')
-            <p>مرحباً أيها المعلم!</p>
-        @elseif($role === 'user')
-            <p>مرحباً أيها الطالب!</p>
-        @endif
-    </div>
 </x-app-layout>
