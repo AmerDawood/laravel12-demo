@@ -168,9 +168,9 @@
                   <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
 
-                         <a class="dropdown-item" href="./badges.html">
+                         <a class="dropdown-item" href="{{ route('tests.index') }}">
                         Test
-                        <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">1</span>
+                        <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">{{ App\Models\Test::count()}}</span>
                       </a>
 
                         <a class="dropdown-item" href="./badges.html">

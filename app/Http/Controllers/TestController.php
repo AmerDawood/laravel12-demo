@@ -9,8 +9,10 @@ class TestController extends Controller
 {
     public function index()
     {
+        $tests = Test::all();
         return view('tests.index', [
-            'tests' => Test::where('user_id', auth()->id())->get(),
+            'tests' => $tests,
+            // 'tests' => Test::where('user_id', auth()->id())->get(),
         ]);
     }
 

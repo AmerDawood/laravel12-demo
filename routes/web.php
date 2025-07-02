@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\StudentTestController;
 use App\Http\Controllers\TestController;
 
 Route::get('/', function () {
@@ -53,7 +54,10 @@ Route::prefix('tests/{test}')->group(function () {
     Route::put('questions/{id}/restore', [QuestionController::class, 'restore'])->name('questions.restore');
 });
 
+    Route::get('/student/tests/{test}/start', [StudentTestController::class, 'start'])->name('student.tests.start');
 
+    Route::post('/student/attempts/{attempt}/end', [StudentTestController::class, 'endAttempt'])
+    ->name('student.attempts.end');
 
 
 

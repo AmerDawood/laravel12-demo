@@ -140,7 +140,7 @@
           <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
 
-                
+
               <li class="nav-item">
                 <a class="nav-link" href="./" >
                   <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -164,9 +164,9 @@
                   <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
 
-                         <a class="dropdown-item" href="./badges.html">
+                         <a class="dropdown-item" href="{{ route('tests.index') }}">
                         Test
-                        <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">1</span>
+                        <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">22</span>
                       </a>
 
                         <a class="dropdown-item" href="./badges.html">
